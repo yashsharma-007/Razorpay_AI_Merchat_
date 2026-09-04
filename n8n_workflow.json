@@ -1,0 +1,88 @@
+{
+  "name": "Merchant Pulse AI - Agentic Workflow (n8n)",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "merchant-pulse-webhook",
+        "options": {}
+      },
+      "name": "1. Play Store Review / Payment Webhook Trigger",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "Analyze the incoming customer complaint and payment telemetry:\nReview: {{ $json.body.review_text }}\nRating: {{ $json.body.rating }}\nMethod: {{ $json.body.payment_method }}\n\nCategorize sentiment, severity (critical/high/medium), and root cause diagnosis.",
+        "hasOutputParser": true
+      },
+      "name": "2. Signal Intelligence Agent (AI Agent Node)",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [500, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:8000/api/webhooks/payment",
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"event\": \"payment.failed\",\n  \"payload\": {\n    \"payment\": {\n      \"entity\": {\n        \"id\": \"{{ $json.body.payment_id || 'pay_n8n_101' }}\",\n        \"amount\": {{ $json.body.amount || 499900 }},\n        \"status\": \"failed\",\n        \"method\": \"{{ $json.body.payment_method || 'upi' }}\",\n        \"error_description\": \"{{ $json.body.review_text || 'UPI Gateway Timeout' }}\"\n      }\n    }\n  }\n}",
+        "options": {}
+      },
+      "name": "3. Merchant Pulse AI Backend (HTTP Request)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [750, 300]
+    },
+    {
+      "parameters": {
+        "fromEmail": "alerts@merchantpulse.ai",
+        "toEmail": "yss20042003@gmail.com",
+        "subject": "🚨 [n8n CRITICAL WARNING] UPI Payment Degradation Detected",
+        "body": "n8n Agentic Workflow Alert:\nIncident Triggered for payment method UPI.\nRevenue At Risk: ₹1,84,800.\nAutonomous Recovery Agent Active."
+      },
+      "name": "4. Dispatch Email Alert (SMTP / Slack)",
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [1000, 300]
+    }
+  ],
+  "connections": {
+    "1. Play Store Review / Payment Webhook Trigger": {
+      "main": [
+        [
+          {
+            "node": "2. Signal Intelligence Agent (AI Agent Node)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. Signal Intelligence Agent (AI Agent Node)": {
+      "main": [
+        [
+          {
+            "node": "3. Merchant Pulse AI Backend (HTTP Request)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. Merchant Pulse AI Backend (HTTP Request)": {
+      "main": [
+        [
+          {
+            "node": "4. Dispatch Email Alert (SMTP / Slack)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  }
+}
