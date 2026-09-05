@@ -1,46 +1,72 @@
 # Merchant Pulse AI — Autonomous Revenue Intelligence & Recovery Platform
 
-> **From customer signal to recovered revenue.**
-
-[![Razorpay Hackathon](https://img.shields.io/badge/Razorpay_Hackathon-AI_Growth_%26_Agentic_Commerce-0066FF.svg)](https://razorpay.com)
-[![Build Status](https://img.shields.io/badge/Build-Passing-emerald.svg)]()
-[![AI Mode](https://img.shields.io/badge/AI_Mode-Mock_%26_OpenAI_Supported-blue.svg)]()
-[![Play Store Scraper](https://img.shields.io/badge/Scraper-google--play--scraper-green.svg)]()
+> From customer signal to recovered revenue.
 
 ---
 
-## 🚀 Pitch & One-Line Summary
+## Executive Overview
 
-**Merchant Pulse AI is an autonomous AI revenue command center for Razorpay merchants that detects emerging customer and payment problems in minutes (MTTD: 2m 41s), correlates external Play Store feedback with payment telemetry, quantifies revenue at risk, and autonomously intervenes during buyer checkouts to recover lost transactions.**
+Merchant Pulse AI is an autonomous revenue intelligence and recovery command center designed for digital merchants and payment platforms. The platform continuously monitors customer sentiment from external channels (such as Google Play Store reviews), correlates unstructured feedback with real-time checkout telemetry, quantifies revenue at risk, and autonomously intervenes during buyer checkout friction to recover lost transactions.
+
+By bridging customer signals and payment gateway diagnostics, Merchant Pulse AI resolves the critical lag between customer friction and operational resolution, achieving a Mean Time to Detect (MTTD) of 2 minutes and 41 seconds.
 
 ---
 
-## 💡 Problem & Value Proposition
+## Problem Statement and Business Value
 
-Traditional payment reporting tells merchants **what happened after lost revenue is already unrecoverable**. 
+Traditional payment reporting operates reactively, informing merchants of lost revenue after conversion has already failed permanently. 
 
-* **Fragmented Signals**: Merchants receive Play Store reviews, customer complaints, and payment gateway logs in isolated silos.
-* **Delayed Detection**: An outage in a specific UPI bank gateway or checkout bug can silently degrade conversion for hours before manual ops teams notice.
-* **Lost Sales**: Buyers experiencing checkout friction abandon transactions permanently without context-aware assistance.
+### Core Industry Challenges
 
-### The Merchant Pulse Solution
+* **Isolated Signal Silos**: Customer complaints on app stores, support tickets, and gateway log telemetry exist in disconnected systems.
+* **Delayed Detection**: Gateway degradations (such as specific UPI bank 504 timeouts or issuer bank declines) silently impair conversion for hours before manual operations teams identify the cause.
+* **Irrecoverable Cart Abandonment**: Buyers encountering payment friction abandon checkout permanently without real-time assistance or alternative guidance.
 
-Merchant Pulse AI connects customer voice with payment telemetry in real time to enforce the central autonomous loop:
+### The Merchant Pulse Value Proposition
+
+Merchant Pulse AI closes this operational loop through a continuous six-stage autonomous cycle:
 
 ```
-DETECT → DIAGNOSE → PREDICT → ACT → RECOVER → LEARN
+DETECT -> DIAGNOSE -> PREDICT -> ACT -> RECOVER -> LEARN
 ```
 
-1. **Detect**: Scrapes real-time Google Play Store reviews and customer feedback.
-2. **Diagnose**: Correlates Play Store review complaints with payment gateway failure rates & checkout conversion drops.
-3. **Predict**: Quantifies exact revenue at risk ($\text{Revenue At Risk} = \text{Affected Txns} \times \text{AOV} \times \text{Recoverability}$) and projects 2-hour business impact.
-4. **Act**: Creates an evidence-backed incident and activates the Buyer Recovery Agent.
-5. **Recover**: Intervenes during buyer payment friction to route customers from degraded gateways (e.g., UPI bank timeouts) to healthy alternatives (Credit/Debit Card).
-6. **Learn**: Updates strategy efficiency stats (e.g. *Card switching produces 2.3× higher conversion than UPI retries*).
+1. **Detect**: Continuously extracts customer reviews and feedback from app stores and telemetry endpoints.
+2. **Diagnose**: Correlates customer complaint clusters with live payment gateway health metrics and conversion dropoffs.
+3. **Predict**: Quantifies exact monetary revenue at risk (`Revenue At Risk = Affected Transactions * Average Order Value * Recoverability Factor`).
+4. **Act**: Raises structured reliability incidents, notifies merchant stakeholders via automated email digests, and initializes recovery agents.
+5. **Recover**: Dynamically intervenes at the buyer checkout modal during payment friction, guiding buyers from degraded payment options to healthy alternatives.
+6. **Learn**: Feeds recovery outcome data back into policy engines to optimize routing efficiency over time.
 
 ---
 
-## 🏗️ Architecture & Multi-Agent Design
+## Key Features and Functional Modules
+
+### 1. Payment Reliability Incident Command Center
+* Real-time monitoring of payment gateway health across UPI, Credit/Debit Cards, Net Banking, and Wallets.
+* Automatic classification of incidents by severity (`CRITICAL`, `HIGH`, `MEDIUM`, `LOW`).
+* On-demand inspection of agent execution history and traces, detailing exact agent reasoning, prompt outputs, and state transitions.
+
+### 2. Autonomous Buyer Recovery Engine
+* In-line intervention modal embedded directly into the checkout flow.
+* Detects transaction failures (e.g., UPI bank gateway 504 timeouts) and recommends friction-free alternative payment channels (e.g., Credit/Debit Card).
+* Direct conversion tracking recording recovered transaction value (`+₹4,999`) into the merchant ledger.
+
+### 3. Customer Signal & Review Intelligence
+* Automated scraping and ingestion of Google Play Store reviews.
+* Natural language categorization into sentiment tiers, rating distributions, and payment-related complaint flags.
+* Ability to reset review caches and trigger real-time Play Store polling.
+
+### 4. Automated Email Alerting & Digest System
+* Automated dispatch of critical incident warnings and daily feedback digests using Resend API and SMTP integration.
+* Includes executive sentiment summaries, top recurring friction vectors, and recommended merchant actions.
+
+### 5. SLA & Revenue Churn Analytics
+* Tracking of Mean Time to Detect (MTTD), Mean Time to Resolve (MTTR), and SLA compliance rates.
+* Financial projections of revenue loss prevented through automated interventions.
+
+---
+
+## Architecture and Multi-Agent Design
 
 ```mermaid
 flowchart TD
@@ -89,76 +115,116 @@ M --> G
 
 | Agent Name | Primary Purpose | Inputs | Key Output |
 | :--- | :--- | :--- | :--- |
-| **Signal Intelligence Agent** | Monitor incoming customer signals & cluster emerging issues | Play Store reviews, App feedback, time-window review streams | Categorized sentiment, severity tags, payment keyphrases |
-| **Root Cause Agent** | Correlate customer complaints with payment telemetry | Review complaints + Gateway failure rates + Conversion drops | Confirmed root cause & evidence list |
-| **Revenue Risk Agent** | Translate technical friction into business impact | Affected checkouts, AOV, historical recoverability | Revenue at risk ($\text{₹1,10,880}$) & 2-hour forecast |
-| **Growth Orchestrator** | Enforce policy guardrails & manage incident lifecycle | Risk matrix, merchant policy rules | Incident creation, merchant alerts, agent activation |
-| **Buyer Recovery Agent** | Intervene during buyer checkout payment friction | Failed checkout context, method health, attempt count | Intelligent method switch recommendation (`SWITCH_PAYMENT_METHOD`) |
+| **Signal Intelligence Agent** | Monitor incoming customer signals and cluster emerging issues | Play Store reviews, App feedback, time-window review streams | Categorized sentiment, severity tags, payment keyphrases |
+| **Root Cause Agent** | Correlate customer complaints with payment telemetry | Review complaints + Gateway failure rates + Conversion drops | Confirmed root cause and evidence list |
+| **Revenue Risk Agent** | Translate technical friction into business impact | Affected checkouts, AOV, historical recoverability | Revenue at risk calculations and 2-hour forecast |
+| **Growth Orchestrator** | Enforce policy guardrails and manage incident lifecycle | Risk matrix, merchant policy rules | Incident creation, merchant alerts, agent activation |
+| **Buyer Recovery Agent** | Intervene during buyer checkout payment friction | Failed checkout context, method health, attempt count | Intelligent method switch recommendation |
 
 ---
 
-## 🛠️ Technology Stack
+## End-to-End Workflow
 
-* **Frontend**: Next.js 14+ (App Router), React 18, TypeScript, Tailwind CSS, Lucide React Icons, Recharts Analytics.
-* **Backend**: Python 3.10+, FastAPI, Uvicorn, Async SQLAlchemy, SQLite (`aiosqlite`), Pydantic v2.
-* **Scraper**: `google-play-scraper` (Real-time live Google Play Store review extraction).
-* **AI Engine**: Modular `LLMProvider` architecture with **Zero-Dependency Deterministic Hackathon Demo Mode** (`AI_MODE=mock`) and OpenAI/Gemini support (`AI_MODE=real`).
+1. **Telemetry Ingestion**: The system pulls customer reviews via the Play Store scraper service while simultaneously receiving checkout event streams.
+2. **Signal Classification**: Unstructured text is processed by the Signal Intelligence Agent to identify payment keywords (e.g., "bank timeout", "money deducted", "OTP failed").
+3. **Root Cause Analysis**: The Root Cause Correlator Agent matches complaint surges against real-time gateway success rates.
+4. **Impact Quantification**: The Revenue Risk Agent computes estimated revenue loss over a 2-hour window.
+5. **Incident Generation & Alerting**: The Growth Orchestrator creates an active incident record and dispatches an email notification to the merchant.
+6. **Checkout Recovery**: When a buyer encounters a payment failure on the checkout page, the Buyer Recovery Agent evaluates gateway health and displays a contextual recovery modal suggesting a higher-converting alternative.
+7. **Ledger Update**: Upon successful payment completion, the transaction is marked recovered, updating the dashboard metrics in real time.
 
 ---
 
-## ⚡ Quickstart & Local Setup
+## Future Roadmap and System Expansion
 
-### 1. Clone & Setup Backend
+* **Autonomous Payment Gateway Routing Engine**: Direct integration with payment gateway APIs to automatically adjust checkout routing weights dynamically without manual intervention.
+* **Dynamic Discount and Nudge Recovery**: Autonomous application of small recovery discounts (e.g., 5% off) for high-value carts experiencing payment friction.
+* **Omnichannel Merchant Notifications**: Expansion of email alerts to include real-time WhatsApp Business API and Slack webhook dispatches.
+* **Cross-Merchant Anomaly Intelligence**: Aggregating anonymized telemetry across merchants to detect widespread bank-level UPI outages across India before official gateway status page updates.
+
+---
+
+## Technology Stack
+
+* **Frontend**: Next.js 16 (App Router), React 19, TypeScript, Vanilla CSS, Lucide React Icons, Recharts Analytics.
+* **Backend**: Python 3.11+, FastAPI, Uvicorn, Async SQLAlchemy, SQLite (`aiosqlite`), Pydantic v2.
+* **AI & Agent Infrastructure**: Custom LLM Provider supporting OpenAI, Google Gemini, and CrewAI frameworks with fallback mock modes.
+* **External Services**: Resend Email API, `google-play-scraper`.
+
+---
+
+## Repository Structure
+
+```
+.
+├── backend/
+│   ├── agents/          # Autonomous multi-agent implementations
+│   ├── providers/       # LLM provider abstractions (Gemini, OpenAI, Mock)
+│   ├── routers/         # FastAPI REST endpoints (incidents, reviews, checkout)
+│   ├── services/        # Scraper, Email, and Background workers
+│   ├── main.py          # Application entrypoint
+│   └── config.py        # Environment configuration
+├── frontend/
+│   ├── src/app/         # Next.js App Router pages (dashboard, incidents, signals)
+│   ├── src/components/  # Layout, Navbar, and UI components
+│   └── src/lib/         # API client utilities
+├── .env.example         # Environment template
+├── Dockerfile           # Backend container specification
+└── README.md            # System documentation
+```
+
+---
+
+## Quickstart and Local Setup
+
+### 1. Prerequisites
+* Python 3.10+
+* Node.js 18+
+
+### 2. Backend Setup
 
 ```bash
+# Navigate to backend directory
 cd backend
-python -m pip install -r requirements.txt
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Start backend server
 python main.py
 ```
-The FastAPI backend server will start at `http://localhost:8000`.
+The FastAPI backend server will initialize at `http://localhost:8000`.
 
-### 2. Setup Frontend
+### 3. Frontend Setup
 
 ```bash
+# Navigate to frontend directory
 cd frontend
+
+# Install dependencies
 npm install
+
+# Start Next.js development server
 npm run dev
 ```
-The Next.js Merchant SaaS Dashboard will start at `http://localhost:3000`.
+The Next.js Merchant SaaS Dashboard will initialize at `http://localhost:3000`.
 
 ---
 
-## 🎯 The 3-Minute Hackathon Demo Walkthrough
+## Production Deployment
 
-1. Open the **Merchant SaaS Dashboard** (`http://localhost:3000/dashboard`). View baseline metrics (UPI success rate 95%, ₹0 revenue at risk).
-2. Click **🚀 1-Click Simulate UPI Incident** in the top control bar:
-   - Injects 25 realistic Play Store reviews reporting UPI payment timeouts.
-   - Degrades UPI gateway health to 82% and drops checkout conversion.
-   - Triggers multi-agent pipeline: **Signal Agent** $\rightarrow$ **Root Cause Agent** $\rightarrow$ **Revenue Risk Agent** $\rightarrow$ **Growth Orchestrator**.
-   - Creates **Critical Incident #1042** showing **₹1,10,880 Revenue at Risk** with an **MTTD of 2m 41s**.
-3. Click **Buyer Checkout Demo** (`http://localhost:3000/checkout`) to simulate a customer buying headphones for ₹4,999:
-   - Select **UPI** and click **Pay ₹4,999**.
-   - Payment fails due to simulated bank gateway timeout.
-   - **Buyer Recovery Agent Modal** appears dynamically:
-     > *"Your UPI payment appears to be experiencing bank timeouts right now. Rather than retrying UPI, you can complete your ₹4,999 payment instantly using Credit/Debit Card."*
-   - Click **Try Credit/Debit Card (Recommended 🟢)** $\rightarrow$ Payment succeeds!
-4. Return to the **Merchant Dashboard**:
-   - **Revenue Recovered** instantly increments by **+₹4,999**.
-   - **AI Recoveries Counter** increments.
-   - **Multi-Agent Execution Feed** logs the successful recovery event.
+### Backend (Render / Docker)
+* **Build Command**: `pip install -r backend/requirements.txt`
+* **Start Command**: `uvicorn backend.main:app --host 0.0.0.0 --port $PORT`
+* **Environment Variables**: `PYTHONPATH=.`, `AI_MODE=real`, `GEMINI_API_KEY=<key>`, `RESEND_API_KEY=<key>`
+
+### Frontend (Vercel)
+* **Root Directory**: `frontend`
+* **Build Command**: `npm run build`
+* **Environment Variables**: `NEXT_PUBLIC_API_URL=https://<your-backend-url>/api`
 
 ---
 
-## 💳 Razorpay Positioning
-
-Merchant Pulse AI is designed as an **Autonomous Intelligence & Orchestration Layer** that sits on top of payment gateways like **Razorpay**. While Razorpay provides robust payment retry APIs, Merchant Pulse AI answers the critical business questions:
-* *Why are customers suddenly failing to pay?*
-* *Is this customer complaint connected to a gateway degradation?*
-* *How much revenue is currently at risk?*
-* *Which alternative payment method will maximize buyer recovery conversion right now?*
-
----
-
-## 📝 License
+## License
 
 Built for the **Razorpay Hackathon** — *AI Growth & Agentic Commerce*.
