@@ -3,7 +3,7 @@ from dotenv import load_dotenv
 from pydantic_settings import BaseSettings
 from pydantic import ConfigDict
 
-load_dotenv()
+load_dotenv(override=True)
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Merchant Pulse AI"
